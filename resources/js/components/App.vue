@@ -1,11 +1,12 @@
 
 <template>
   <div class="content">
-    <div class="title m-b-md">{{ title }}</div>
+    <Placeholder :title="title" />
   </div>
 </template>
 
 <script>
+import Placeholder from "./Placeholder.vue";
 export default {
   name: "App",
   data() {
@@ -13,6 +14,7 @@ export default {
       title: "Work In Progress..",
     };
   },
+  components: { Placeholder },
 };
 </script>
 
