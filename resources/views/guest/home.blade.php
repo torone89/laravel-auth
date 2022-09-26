@@ -84,9 +84,12 @@
 
         <div class="content">
             <div class="title m-b-md">
-                Coming Soon
+                Work In Progress
             </div>
 
+            {{-- CONTENUTO GESTITO DA VUE --}}
+            <div id="root">
+            </div>
 
         </div>
 </body>
