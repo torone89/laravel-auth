@@ -10,6 +10,9 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
 
+    {{-- Import JS --}}
+    <script defer src="{{ asset('js/front.js') }}"></script>
+
     <!-- Styles -->
     <style>
         html,
@@ -89,9 +92,13 @@
 
             {{-- CONTENUTO GESTITO DA VUE --}}
             <div id="root">
+
+
+
             </div>
 
         </div>
+
 </body>
 
 </html>
