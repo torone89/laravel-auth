@@ -86,9 +86,6 @@
         @endif
 
         <div class="content">
-            <div class="title m-b-md">
-                Work In Progress
-            </div>
 
             {{-- CONTENUTO GESTITO DA VUE --}}
             <div id="root">
