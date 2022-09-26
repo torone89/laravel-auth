@@ -19,5 +19,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//ROUTE PROTECTED
-Route::get('/admin', 'HomeController@index')->middleware('auth')->name('admin.home');
+
+//Resource Post
+Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
+
+    // Route::resource('posts', 'PostController');
+
+    Route::get('/{any}', function () {
+        abort('404');
+    })->where('any', '.');
+});
+
+Route::get('/{any?}', function () {
+    return view('guest.home');
+})->where('any', '.');
