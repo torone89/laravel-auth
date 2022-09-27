@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,7 +20,7 @@ Auth::routes(['register' => false]);
 Route::middleware('auth')->prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
 
-    // Route::resource('posts', 'PostController');
+    Route::resource('posts', 'PostController');
 
     Route::get('/{any}', function () {
         abort('404');
