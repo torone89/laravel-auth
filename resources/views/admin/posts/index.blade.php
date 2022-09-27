@@ -13,7 +13,10 @@
                 <th scope="col">Slug</th>
                 <th scope="col">Creato il </th>
                 <th scope="col">Modificato il </th>
-                <th>Bottoni</th>
+                <th></th>
+
+
+                </th>
 
             </tr>
         </thead>
@@ -25,7 +28,8 @@
                     <td>{{ $post->slug }}</td>
                     <td>{{ $post->created_at }}</td>
                     <td>{{ $post->updated_at }}</td>
-                    <td></td>
+                    <td> <a class='btn btn-sm btn-primary mr-2' href="{{ route('admin.posts.show', $post) }}"><i
+                                class='fa-solid fa-eye mr-2'></i>Vedi</a></td>
                 </tr>
             @empty
                 <tr>
