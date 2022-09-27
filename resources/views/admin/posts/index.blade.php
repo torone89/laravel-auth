@@ -35,8 +35,21 @@
                     <td>{{ $post->slug }}</td>
                     <td>{{ $post->created_at }}</td>
                     <td>{{ $post->updated_at }}</td>
-                    <td> <a class='btn btn-sm btn-primary mr-2' href="{{ route('admin.posts.show', $post) }}"><i
-                                class='fa-solid fa-eye mr-2'></i>Vedi</a></td>
+
+                    <td>
+                        <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="delete-form">
+                            <a class='btn btn-sm btn-primary mr-2' href="{{ route('admin.posts.show', $post) }}"><i
+                                    class='fa-solid fa-eye mr-2'></i>Vedi</a>
+                            <a class="btn btn-sm btn-warning" href="{{ route('admin.posts.edit', $post) }}"><i
+                                    class="fa-solid fa-pencil"></i> Modifica</a>
+
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger ml-2" type="submit">
+                                <i class="fa-solid fa-trash"></i>Elimina
+                            </button>
+                        </form>
+                    </td>
                 </tr>
             @empty
                 <tr>
