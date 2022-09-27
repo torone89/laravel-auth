@@ -61,4 +61,10 @@
 
         </tbody>
     </table>
+
+    <nav class="mt-3">
+        @if ($posts->hasPages())
+            {{ $posts->links() }}
+        @endif
+    </nav>
 @endsection
