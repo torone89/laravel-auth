@@ -46,7 +46,7 @@
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger ml-2" type="submit">
-                                <i class="fa-solid fa-trash"></i>Elimina
+                                <i class="fa-solid fa-trash"></i> Elimina
                             </button>
                         </form>
                     </td>

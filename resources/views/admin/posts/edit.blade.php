@@ -2,7 +2,7 @@
 
 @section('content')
     <header>
-        <h1>Crea Post</h1>
+        <h1>Modifica Post</h1>
     </header>
     <hr />
     @include('includes.admin.posts.form')
