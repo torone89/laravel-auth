@@ -18,23 +18,37 @@
     <div class="col-12">
         <div class="form-group">
             <label for="title">Titolo</label>
-            <input type="text" class="form-control" id="title" name="title"
+            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
                 value="{{ old('title', $post->title) }}" required minlenght="5" maxlenght="50">
+            {{-- MESSAGGIO ERRORE --}}
+            @error('title')
+                <div class="invalid-feedback">{{ $message }} </div>
+            @enderror
         </div>
+
+
     </div>
     <div class="col-12">
         <div class="form-group">
             <label for="content">Contenuto</label>
-            <textarea class="form-control" id="content" rows="8" name="content" required>
-                        {{ old('content', $post->content) }}
-                    </textarea>
+
+            <textarea class="form-control @error('content') is-invalid @enderror" id="content" rows="8" name="content"
+                required>{{ old('content', $post->content) }}</textarea>
+            {{-- MESSAGGIO ERRORE --}}
+            @error('content')
+                <div class="invalid-feedback">{{ $message }} </div>
+            @enderror
         </div>
     </div>
     <div class="col-11">
         <div class="form-group">
             <label for="image">Immagine</label>
-            <input type="url" class="form-control" id="image" name="image"
-                value="{{ old('image', $post->image) }}">
+            <input type="url" class="form-control @error('title') is-invalid @enderror" id="image"
+                name="image" value="{{ old('image', $post->image) }}">
+            {{-- MESSAGGIO ERRORE --}}
+            @error('image')
+                <div class="invalid-feedback">{{ $message }} </div>
+            @enderror
         </div>
     </div>
     <div class="col-1">
