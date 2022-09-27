@@ -14,6 +14,7 @@
                 <th scope="col">Creato il </th>
                 <th scope="col">Modificato il </th>
                 <th>Bottoni</th>
+
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
                     <td>{{ $post->slug }}</td>
                     <td>{{ $post->created_at }}</td>
                     <td>{{ $post->updated_at }}</td>
+                    <td></td>
                 </tr>
             @empty
                 <tr>
