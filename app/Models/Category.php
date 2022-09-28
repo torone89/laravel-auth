@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    //
+    //RELAZIONE FORTE
+    public function posts()
+    {
+        return $this->hasMany('App\Models\Post');
+    }
 }
