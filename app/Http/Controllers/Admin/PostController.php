@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\Models\Category;
 
+
 class PostController extends Controller
 {
     /**
@@ -19,8 +20,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->paginate(10);
-
-        return view('admin.posts.index', compact('posts'));
+        $categories = Category::all();
+        return view('admin.posts.index', compact('posts', 'categories'));
     }
 
     /**
