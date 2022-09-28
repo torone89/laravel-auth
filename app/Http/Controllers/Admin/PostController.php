@@ -111,6 +111,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
         // VALIDAZIONE
         $request->validate([
             'title' => ['required', 'string', 'min:5', 'max:50', Rule::unique('posts')->ignore($post->id)],
@@ -128,6 +129,7 @@ class PostController extends Controller
         ]);
 
         $data = $request->all();
+
         $data['slug'] = Str::slug($data['title'], '-');
         $post->update($data);
         return redirect()->route('admin.posts.show', $post)->with('message', "Post modificato con successo")->with('type', "success");

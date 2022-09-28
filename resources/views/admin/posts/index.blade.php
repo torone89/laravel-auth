@@ -76,4 +76,23 @@
             {{ $posts->links() }}
         @endif
     </nav>
+
+    <section class="my-5" id="category-posts">
+        <h2 class="mb-2">Post by Categories</h2>
+        <div class="row">
+            @foreach ($categories as $category)
+                <div class="col-3">
+
+
+                    <h3 class="my-3">{{ $category->label }} ({{ count($category->posts) }})</h3>
+                    @forelse($category->posts as $post)
+                        <p><a href="{{ route('admin.posts.show', $post) }}">{{ $post->title }}</a></p>
+
+                    @empty
+                        Nessun Post
+                    @endforelse
+                </div>
+            @endforeach
+        </div>
+    </section>
 @endsection
