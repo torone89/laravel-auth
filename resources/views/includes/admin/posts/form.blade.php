@@ -35,8 +35,12 @@
                     <option @if (old('category_id', $post->categor_id) == $category->id) selected @endif value="{{ $category }}">
                         {{ $category->label }}</option>
                 @endforeach
-
             </select>
+
+            {{-- MESSAGGIO ERRORE --}}
+            @error('category_id')
+                <div class="invalid-feedback">{{ $message }} </div>
+            @enderror
         </div>
     </div>
 
