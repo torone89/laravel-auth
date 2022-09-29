@@ -82,5 +82,17 @@
     <button class="btn btn-success" type="submit">
         <i class="fa-solid fa-floppy-disk mr-2"></i> Salva
     </button>
+
+    {{-- Checkbox  Autore Nascondere all'utente loggato la possibilità di modificare post di cui non è autore. 
+    OPPURE permettergli di fare modifiche
+     e di decidere se dopo la modifica debba risultare autore o meno (tramite un checkbox) --}}
+    {{-- @if ($post->exists && $post->user_id !== Auth::id())
+        <div class="form-froup form-check">
+            <input type="checkbox" class="form-check input" id="switch_author" name="switch_author" value="1"
+                @if (old('switch_author'))  @endif>
+            <label class="form-check-label" for="switch_author"><strong>Assegnami come autore del post di: </strong>
+                {{ $post->user->name }}</label>
+        </div>
+    @endif --}}
 </footer>
 </form>
