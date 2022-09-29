@@ -3,10 +3,33 @@
 @section('content')
     <header class="d-flex justify-content-between align-items-center">
         <h1>Lista Post</h1>
-        <div>
+
+
+        <div class="d-flex justify-content-end align-items-center">
+
+            {{-- Filtro  Categorie --}}
+            <form action='' method="">
+                <div class="input-group">
+                    <select name="category_id" id="custom-select">
+                        <option value="">Tutte le categorie</option>
+                        @foreach ($categories as $category)
+                            <option @if ($category->id == $selected_category) selected @endif value={{ $category->id }}>
+                                {{ $category->label }} </option>
+                        @endforeach
+                    </select>
+                    <div class="input-group-append mx-2">
+                        <button class="btn btn-outline-secondary" type="submit">Filtra</button>
+                    </div>
+                </div>
+            </form>
+
+            {{-- Add new Post --}}
             <a class='btn btn-success'href="{{ route('admin.posts.create') }}">
                 <i class='fa-solid fa-plus mr-2'></i> Nuovo
                 Post</a>
+
+            <div>
+            </div>
         </div>
 
     </header>
@@ -17,6 +40,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Titolo</th>
+                <th scope="col">Autore</th>
                 <th scope="col">Categoria</th>
                 <th scope="col">Slug</th>
                 <th scope="col">Creato il </th>
@@ -34,6 +58,13 @@
                     <th scope="row">{{ $post->id }}</th>
                     <td>{{ $post->title }}</td>
                     <td>
+                        @if ($post->user)
+                            {{ $post->user->name }}
+                        @else
+                            Autore anonimo
+                        @endif
+                    </td>
+                    <td>
                         @if ($post->category)
                             <span class="badge badge-pill badge-{{ $post->category->color ?? 'light' }}">
                                 {{ $post->category->label }}</span>
@@ -46,23 +77,30 @@
                     <td>{{ $post->updated_at }}</td>
 
                     <td>
+
                         <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="delete-form">
+
+
                             <a class='btn btn-sm btn-primary mr-2' href="{{ route('admin.posts.show', $post) }}"><i
-                                    class='fa-solid fa-eye mr-2'></i>Vedi</a>
+                                    class='fa-solid fa-eye'></i></a>
+                            {{-- Controllo per fare vedere i bottoni solo all'autore del post --}}
+                            {{-- @if ($post->user_id === Auth::id()) --}}
                             <a class="btn btn-sm btn-warning" href="{{ route('admin.posts.edit', $post) }}"><i
-                                    class="fa-solid fa-pencil"></i> Modifica</a>
+                                    class="fa-solid fa-pencil"></i> </a>
 
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger ml-2" type="submit">
-                                <i class="fa-solid fa-trash"></i> Elimina
+                                <i class="fa-solid fa-trash"></i>
                             </button>
+                            {{-- @endif --}}
                         </form>
+
                     </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7">
+                    <td colspan="8">
                         <h3 class="text-center">Nessun Post</h3>
                     </td>
                 </tr>

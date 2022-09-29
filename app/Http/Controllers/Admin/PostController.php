@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class PostController extends Controller
@@ -17,11 +19,15 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->paginate(10);
+        $category_id = $request->query('category_id');
+
+        $query = Post::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC');
+        $posts = $category_id ? $query->where('category_id', $category_id)->paginate(10) : $query->paginate(10);
         $categories = Category::all();
-        return view('admin.posts.index', compact('posts', 'categories'));
+        $selected_category = $category_id;
+        return view('admin.posts.index', compact('posts', 'categories', 'selected_category'));
     }
 
     /**
@@ -51,7 +57,6 @@ class PostController extends Controller
             'content' => 'required|string',
             'image' => 'nullable|url',
             'category_id' => 'nullable | exists:categories,id',
-        ], [
             'title.required' => 'Il titolo è obbligatorio',
             'content.required' => 'Devi scrivere il contenuto del post',
             'title.min' => 'Il titolo deve avere almeno :min caratteri',
@@ -71,6 +76,8 @@ class PostController extends Controller
         $post->fill($data);
 
         $post->slug = Str::slug($post->title, '-');
+
+        $post->user_id = Auth::id();
 
         $post->save();
 
@@ -98,6 +105,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        if ($post->user_id !== Auth::id()) {
+            return redirect()->route('admin.posts.index')->with('message', "Non sei autorizzato a modificare questo post")->with('type', "warning");
+        }
         $categories = Category::select('id', 'label')->get();
         return view('admin.posts.edit', compact('post', 'categories'));
     }
@@ -118,7 +128,6 @@ class PostController extends Controller
             'content' => 'required|string',
             'image' => 'nullable|url',
             'category_id' => 'nullable | exists:categories,id',
-        ], [
             'title.required' => 'Il titolo è obbligatorio',
             'content.required' => 'Devi scrivere il contenuto del post',
             'title.min' => 'Il titolo deve avere almeno :min caratteri',
@@ -129,8 +138,10 @@ class PostController extends Controller
         ]);
 
         $data = $request->all();
-
         $data['slug'] = Str::slug($data['title'], '-');
+
+        if (array_key_exists('switch_author', $data)) $post->user_id = Auth::id();
+
         $post->update($data);
         return redirect()->route('admin.posts.show', $post)->with('message', "Post modificato con successo")->with('type', "success");
     }
@@ -142,8 +153,11 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
+
     {
-        $post->delete();
+        if ($post->user_id !== Auth::id()) {
+            return redirect()->route('admin.posts.index')->with('message', "Non sei autorizzato ad eliminare questo post")->with('type', "warning");
+        }
         $post->delete();
         return redirect()->route('admin.posts.index')
             ->with('message', 'Il post è stato eliminato correttamente')
