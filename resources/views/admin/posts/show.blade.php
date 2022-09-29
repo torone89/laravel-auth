@@ -19,9 +19,15 @@
             @endif
         </p>
         <p>{{ $post->content }}</p>
+
+        <div><strong>Creato il:</strong> <time>{{ $post->created_at }}</time></div>
+        <div><strong> Modificato il:</strong> <time>{{ $post->updated_at }}</time></div>
         <div>
-            <strong>Creato il:</strong> <time>{{ $post->created_at }}</time>
-            <strong> Modificato il:</strong> <time>{{ $post->updated_at }}</time>
+            @if ($post->user)
+                <strong>Autore:</strong> {{ $post->user->name }}
+            @else
+                Autore anonimo
+            @endif
         </div>
     </div>
     <footer class="mt-5">
@@ -33,18 +39,22 @@
 
 
             </div>
+
             <div class="d-flex align-items-center justify-content-end">
-                <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="delete-form">
-                    <a class="btn btn btn-warning" href="{{ route('admin.posts.edit', $post) }}"><i
-                            class="fa-solid fa-pencil m-2"></i>
-                        Modifica</a>
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-danger mx-2" type="submit">
-                        <i class="fa-solid fa-trash m-2"></i>Elimina
-                    </button>
-                </form>
+                @if ($post->user_id === Auth::id())
+                    <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="delete-form">
+                        <a class="btn btn btn-warning" href="{{ route('admin.posts.edit', $post) }}"><i
+                                class="fa-solid fa-pencil m-2"></i>
+                            Modifica</a>
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger mx-2" type="submit">
+                            <i class="fa-solid fa-trash m-2"></i>Elimina
+                        </button>
+                    </form>
+                @endif
             </div>
+
         </div>
     </footer>
 @endsection
