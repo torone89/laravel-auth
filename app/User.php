@@ -43,6 +43,7 @@ class User extends Authenticatable
 
         return $this->hasMany('App\Models\Post');
     }
+    // RELAZIONE FORTE
     public function userDetail()
     {
         return $this->HasOne('App\Models\UserDetail');

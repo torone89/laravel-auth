@@ -18,4 +18,9 @@ class Post extends Model
     {
         return $this->belongsTo('App\User');
     }
+    //many to many
+    public function tags()
+    {
+        return $this->belongsToMany('App\Models\Tag');
+    }
 }
