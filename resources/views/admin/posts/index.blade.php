@@ -37,12 +37,13 @@
 
     <table class="table table-striped table-dark">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th scope="col">#</th>
                 <th scope="col">Titolo</th>
                 <th scope="col">Autore</th>
+                <th scope="col">Tags</th>
                 <th scope="col">Categoria</th>
-                <th scope="col">Slug</th>
+                {{-- <th scope="col">Slug</th> --}}
                 <th scope="col">Creato il </th>
                 <th scope="col">Modificato il </th>
                 <th scope="col" class="text-center">Azioni</th>
@@ -54,17 +55,27 @@
         </thead>
         <tbody>
             @forelse($posts as $post)
-                <tr>
+                <tr class=text-center>
                     <th scope="row">{{ $post->id }}</th>
                     <td>{{ $post->title }}</td>
-                    <td>
+                    <td class="py-2">
                         @if ($post->user)
                             {{ $post->user->name }}
                         @else
                             Autore anonimo
                         @endif
                     </td>
-                    <td>
+                    <td class="py-1">
+                        <div class="mb-2">
+                            @forelse($post->tags as $tag)
+                                <span class="badge text-white p-1"
+                                    style="background-color: {{ $tag->color }}">{{ $tag->label }}</span>
+                            @empty
+                                Nessun tag
+                            @endforelse
+                        </div>
+                    </td>
+                    <td class="p-1">
                         @if ($post->category)
                             <span class="badge badge-pill badge-{{ $post->category->color ?? 'light' }}">
                                 {{ $post->category->label }}</span>
@@ -72,11 +83,11 @@
                             Nessuna
                         @endif
                     </td>
-                    <td>{{ $post->slug }}</td>
-                    <td>{{ $post->created_at }}</td>
-                    <td>{{ $post->updated_at }}</td>
+                    {{-- <td class="p-1"> {{ $post->slug }}</td> --}}
+                    <td class="p-1"> {{ $post->created_at }}</td>
+                    <td class="p-1"> {{ $post->updated_at }}</td>
 
-                    <td>
+                    <td class="p-1">
 
                         <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="delete-form">
 
