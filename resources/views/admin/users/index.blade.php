@@ -18,7 +18,6 @@
                 <th scope="col">N. Posts</th>
 
 
-                </th>
 
             </tr>
         </thead>
